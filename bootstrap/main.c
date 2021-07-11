@@ -34,24 +34,6 @@ void readPayload() {
 // Initial function. This hooks at the end of init_registers
 void start() {
 
-	// "Anticheat"
-
-	#ifndef DEBUG
-	// Overwrite all commonly used hooks
-	directWriteBlr(VIHook);
-	directWriteBlr(KPADHook);
-	directWriteBlr(GXDrawHook);
-	directWriteBlr(GXFlushHook);
-	directWriteBlr(OSSleepHook);
-	directWriteBlr(AXNextFrameHook);
-
-	// Wipe area at 0x80001800-0x80003000
-	memset((void*)0x80001800, 0, 0x1800);
-
-	// Disable Dolphin's codehandler
-	_directWriteBlr((void*)0x800018A8);
-	#endif
-
 	// Main Hook
 	directWriteBranchEx(RelHook, readPayload, false);
 
